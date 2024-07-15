@@ -1,0 +1,25 @@
+pipeline {
+pipeline {
+    agent {
+        node {
+            label 'ali_machine'
+        }
+    }
+    stages {
+        stage('checkout') {
+            steps {
+               checkout scmGit(branches: [[name: '*/develop_2023_1.1.1']], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'ocean-vue']], gitTool: 'git_node_1', userRemoteConfigs: [[credentialsId: 'git_ssh', url: 'https://gitee.com/weigang1024/ocean-vue.git']])
+            }
+        }
+        stage('build') {
+            steps {
+               sh 'cd ocean-vue\nnpm run build:prod\nzip -r dist.zip dist'
+            }
+        }
+        stage('publish') {
+            steps {
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'node2', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'cd application;sh deploy_ocean_vue.sh', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: 'application', remoteDirectorySDF: false, removePrefix: 'ocean-vue/', sourceFiles: 'ocean-vue/dist.zip')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+            }
+        }
+    }
+}

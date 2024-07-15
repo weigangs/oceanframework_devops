@@ -1,0 +1,19 @@
+pipeline {
+    agent {
+        node {
+            label 'jenkins_node1'
+        }
+    }
+    stages {
+        stage('checkout') {
+            steps {
+               checkout scmGit(branches: [[name: '*/develop_2023_1.1.1']], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'oceanframework']], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/weigangs/oceanframework.git']])
+            }
+        }
+        stage('build') {
+            steps {
+               sh 'pwd\ncd oceanframework\nmvn clean install -DskipTests'
+            }
+        }
+    }
+}

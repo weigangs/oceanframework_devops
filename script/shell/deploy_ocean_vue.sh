@@ -1,0 +1,1 @@
+unzip -o dist.zip -d /home/deploy/application/ocean_vue/
