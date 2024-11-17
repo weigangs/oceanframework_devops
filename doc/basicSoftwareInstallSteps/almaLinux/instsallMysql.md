@@ -26,7 +26,7 @@
 	
 	
 
-1. `CREATE DATABASE gooddb default character set utf8mb4 collate utf8mb4_unicode_ci;`
-2. `CREATE USER 'gooddb'@'localhost' IDENTIFIED BY 'your_password';`
-3. `GRANT ALL PRIVILEGES ON gooddb.* TO 'gooddb'@'localhost';`
+1. `CREATE DATABASE yourdbname default character set utf8mb4 collate utf8mb4_unicode_ci;`
+2. `CREATE USER 'username'@'localhost' IDENTIFIED BY 'your_password';`
+3. `GRANT ALL PRIVILEGES ON yourdbname.* TO 'username'@'localhost';`
 4. `FLUSH PRIVILEGES;`
